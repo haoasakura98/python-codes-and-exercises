@@ -1,0 +1,47 @@
+import numpy as np
+
+# Configuração da roleta
+resultados = ["Vermelho", "Preto", "Coringa"]
+probabilidades = [18/39, 18/39, 3/39]  # probabilidades aproximadas
+pagamento = {"Vermelho": 2, "Preto": 2, "Coringa": 14}
+
+num_rodadas = 50_000_000
+sorteios = np.random.choice(resultados, size=num_rodadas, p=probabilidades)
+
+# Transformar sorteios em arrays booleanos
+vermelho_bool = sorteios == "Vermelho"
+preto_bool = sorteios == "Preto"
+coringa_bool = sorteios == "Coringa"
+
+# Função para detectar sequências consecutivas
+def sequencias_consecutivas(arr, n=9):
+    """Retorna array booleano True onde houve n ocorrências consecutivas."""
+    cumsum = np.cumsum(arr.astype(int))
+    res = np.zeros_like(arr, dtype=bool)
+    res[n:] = (cumsum[n:] - cumsum[:-n]) == n
+    return res
+
+# Estratégia de apostas
+apostar_vermelho = sequencias_consecutivas(preto_bool, 9)
+apostar_preto = sequencias_consecutivas(vermelho_bool, 9)
+# Aposta no coringa sempre que ele sair 5 vezes consecutivas (ajustável)
+apostar_coringa = sequencias_consecutivas(coringa_bool, 5)
+
+# Inicializa lucros
+lucros = np.zeros(num_rodadas)
+
+# Calcula lucros vetorizados
+lucros[apostar_vermelho] = np.where(sorteios[apostar_vermelho] == "Vermelho", pagamento["Vermelho"], 0)
+lucros[apostar_preto] = np.where(sorteios[apostar_preto] == "Preto", pagamento["Preto"], 0)
+lucros[apostar_coringa] = np.where(sorteios[apostar_coringa] == "Coringa", pagamento["Coringa"], 0)
+
+# Estatísticas
+total_apostas = np.sum(apostar_vermelho) + np.sum(apostar_preto) + np.sum(apostar_coringa)
+lucro_total = np.sum(lucros)
+lucro_medio_por_aposta = np.mean(lucros[(apostar_vermelho | apostar_preto | apostar_coringa)]) if total_apostas > 0 else 0
+
+# Resultados
+print(f"Total de rodadas: {num_rodadas}")
+print(f"Total de apostas feitas: {total_apostas}")
+print(f"Lucro total: {lucro_total:.2f} (cada aposta simulada de R$1)")
+print(f"Lucro médio por aposta: {lucro_medio_por_aposta:.4f}")
