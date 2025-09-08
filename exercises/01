@@ -1,0 +1,26 @@
+#Crie um codigo que mostre o número antecessor e o numero sucessor do input
+
+x = int(input("Digite um valor"))
+print(f"O antecessor é {x - 1} e o sucessor é {x + 1}")
+
+
+#Crie um algoritmo que leia um numero e mostre seu dobro, seu triplo e sua raiz quadrada
+
+y = int(input("digite um valor"))
+print(f"O dobro do valor digitado é {y*2}. O triplo é {y*3}. E a raiz quadrada é {y**(1/2)}")
+
+#Calcular a media de notas de um aluno
+nota1 = float(input("Digite a primeira nota"))
+nota2 = float(input("Digite a segunda nota"))
+
+media = (nota1 + nota2)/2
+print(f"A media das notas foi {media:.2f}")
+
+# faça um programa que leia o comprimento do cateto oposto e do cateto adjacente de um triangulo retangulo, calcule e mostre o comprimento da hipotenusa.
+# import no meio do codigo mesmo, apenas para diferenciar que os anteriores nao usaram nada da biblioteca math   
+import math 
+
+co = float(input("Digite o valor do Cateto Oposto\n"))
+ca = float(input("Digite o valor do Cateto Adjacente\n"))
+
+print(f"O valor da hipotenusa é {math.hypot(co, ca)}")
