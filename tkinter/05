@@ -1,0 +1,99 @@
+import tkinter
+from decimal import Decimal
+
+
+
+janela = tkinter.Tk()
+janela.title("Restaurante do Judeu")
+janela.geometry("300x300")
+
+container = tkinter.Frame(janela)
+container.pack(fill="both", expand=True)
+
+
+class Pedidos:
+    def __init__(self):
+        self.pedidos = []
+    
+    def adicionar_item(self, item, menu):
+        self.pedidos.append(item)
+        print(f"{item} foi adicionado à conta (R${menu.precos[item]})")
+
+    def mostrar_conta(self, menu):
+        total = sum(menu.precos[item] for item in self.pedidos)
+        itens = "\n".join(self.pedidos)
+        menu.label_menu_conta.config(text=f"Itens consumidos:\n{itens}\n\nTotal: R$ {total}")
+
+pedidos = Pedidos()
+
+
+class Menus:
+    def __init__(self, container):
+        self.precos = {
+            "Espetinho": 10,
+            "Macarrão": 20,
+            "Hamburguer": 15,
+            "Pamonha": 8,
+            "Coca-Cola": 6,
+            "Suco de Laranja": 7,
+            "Agua": 3
+        }
+
+        self.menu_principal = tkinter.Frame(container)
+        self.menu_pratos = tkinter.Frame(container)
+        self.menu_bebidas = tkinter.Frame(container)
+        self.menu_conta = tkinter.Frame(container)
+        for frame in (self.menu_principal, self.menu_pratos, self.menu_bebidas, self.menu_conta):
+            frame.grid(row=0, column=0, sticky="nsew")
+
+
+
+        ## MENU PRINCIPAL
+        label_menu_principal = tkinter.Label(self.menu_principal)
+        botao_pratos = tkinter.Button(self.menu_principal, text="pratos", command=lambda: self.mostrar_frame(self.menu_pratos))
+        botao_pratos.pack(padx=20)
+        botao_bebidas = tkinter.Button(self.menu_principal, text="bebidas", command=lambda: self.mostrar_frame(self.menu_bebidas) )
+        botao_bebidas.pack(padx=20)
+        botao_conta = tkinter.Button(self.menu_principal, text="Pedir a conta", command=lambda: [self.mostrar_frame(self.menu_conta), pedidos.mostrar_conta(self)])
+        botao_conta.pack(padx=20)
+        
+
+        ## MENU DE PRATOS ##
+        label_menu_pratos = tkinter.Label(self.menu_pratos)
+        botao_espetinho = tkinter.Button(self.menu_pratos, text="Espetinho", command=lambda: pedidos.adicionar_item("Espetinho", self))
+        botao_espetinho.pack(padx=20)
+        botao_macarrao = tkinter.Button(self.menu_pratos, text="Macarrão", command=lambda: pedidos.adicionar_item("Macarrão", self))
+        botao_macarrao.pack(padx=20)
+        botao_hamburguer = tkinter.Button(self.menu_pratos, text="Hamburguer", command=lambda: pedidos.adicionar_item("Hamburguer", self))
+        botao_hamburguer.pack(padx=20)
+        botao_pamonha = tkinter.Button(self.menu_pratos, text="Pamonha", command=lambda: pedidos.adicionar_item("Pamonha", self))
+        botao_pamonha.pack(padx=20)
+        botao_voltar1 = tkinter.Button(self.menu_pratos, text="Voltar ao menu principal", command=lambda: self.mostrar_frame(self.menu_principal))
+        botao_voltar1.pack(padx=20)
+
+        ## MENU DE BEBIDAS ##
+        label_menu_bebidas = tkinter.Label(self.menu_bebidas)
+        botao_coca = tkinter.Button(self.menu_bebidas, text="Coca-Cola", command=lambda: pedidos.adicionar_item("Coca-Cola", self))
+        botao_coca.pack(padx=20)
+        botao_suco = tkinter.Button(self.menu_bebidas, text="Suco de Laranja", command=lambda: pedidos.adicionar_item("Suco de Laranja", self))
+        botao_suco.pack(padx=20)
+        botao_agua = tkinter.Button(self.menu_bebidas, text="Agua", command=lambda: pedidos.adicionar_item("Agua", self))
+        botao_agua.pack(padx=20)
+        botao_voltar2 = tkinter.Button(self.menu_bebidas, text="Voltar ao menu principal", command=lambda: self.mostrar_frame(self.menu_principal))
+        botao_voltar2.pack(padx=20)
+
+        ## MENU DE CONTA ##
+        self.label_menu_conta = tkinter.Label(self.menu_conta, text="Resumo da conta")
+        self.label_menu_conta.pack()
+
+    def mostrar_frame(self, frame):
+        frame.tkraise()
+
+
+
+
+menu = Menus(container)
+menu.mostrar_frame(menu.menu_principal)
+
+
+janela.mainloop()
