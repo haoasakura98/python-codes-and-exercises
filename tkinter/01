@@ -1,0 +1,60 @@
+import tkinter
+
+
+
+## 2. **Conversor de Unidades**
+#Um programa que converte entre diferentes unidades (temperatura, peso, distância, etc.).
+#Você pode usar dropdown menus para selecionar as unidades e campos de entrada para os valores.
+#Preciso aprender a fazer o imput no tkinter
+#Preciso aprender um dropdown menu
+
+
+#temperatura
+
+
+
+janela = tkinter.Tk()
+janela.title("Conversor de unidades")
+janela.geometry("400x400")
+
+conversor = tkinter.Label(janela, text="Escolha o que quer converter")
+conversor.pack()
+
+entrada = tkinter.Entry(janela)
+entrada.pack()
+
+unidade_var = tkinter.StringVar(janela)
+menu = tkinter.OptionMenu(janela, unidade_var, "Celsius", "Fahrenheit")
+menu.pack()
+
+def converter():
+    try:
+        temp = float(entrada.get())  # pega valor digitado
+        unidade = unidade_var.get()  # pega unidade escolhida no menu
+
+        if unidade == "Celsius":
+            resultado_num = (temp * 9/5) + 32
+            saida = f"{resultado_num:.2f} °F"
+        elif unidade == "Fahrenheit":
+            resultado_num = (temp - 32) * 5/9
+            saida = f"{resultado_num:.2f} °C"
+        else:
+            raise ValueError("Unidade inválida")
+
+        label_resultado.config(text=f"Resultado: {saida}")
+
+    except ValueError:
+        label_resultado.config(text="Digite um número válido!")
+
+botao_calcular = tkinter.Button(janela, text="Converter", command=converter)
+botao_calcular.pack()
+
+label_resultado = tkinter.Label(janela, text="Resultado: ")
+label_resultado.pack()
+
+janela.mainloop()
+
+
+
+
+
