@@ -1,0 +1,27 @@
+#Calculadora Simples
+
+#Remove a possibilidade de colocar no input comandos básicos do python
+seguro = {
+    '__builtins__': None
+}
+
+while True:
+    #Input para que a conta a ser calculada seja escrita
+    expressao = input("Digite a conta a ser calculada. Para sair digite sair\n")
+
+    if expressao.lower() == "sair":
+        break
+
+    #Verifica o input
+    if '=' in expressao:
+        print("o caractere = não é aceito")
+    elif any(char.isalpha() for char in expressao):
+        print("letras nao sao permitidas")
+    else:
+        try:
+            #Resultado
+            resultado = eval(expressao, seguro)
+            print(f"O resultado da conta é {resultado}")
+        except Exception as e:
+            print(f"Erro ao calcular a expressao {e}")
+
