@@ -1,0 +1,44 @@
+#Definição da classe
+class Pessoa:
+    #Metodo que é chamado automaticamente ao criar um objeto
+    def __init__ (self, nome, idade, profissao="Desconhecida", altura="Desconhecida"):
+        self.nome = nome
+        self.idade = idade
+        self.profissao = profissao
+        self.altura = altura
+
+    #Metodo que o objeto pode fazer
+    def apresentar(self):
+        print(f"Olá, meu nome é {self.nome}, e eu tenho {self.idade} anos. Minha profissão é {self.profissao} e possuo {self.altura} metros de altura.")
+
+    def maioridade(self):
+        if self.idade >= 18:
+            print(f"{self.nome} é maior de idade.")
+        else:
+            print(f"{self.nome} é menor de idade")
+
+    #Metodo para imprimir o dicionario do objeto
+    def imprimir(self):
+        for chave, valor in self.__dict__.items():
+            print(f"{chave}:{valor}")
+
+
+
+p1 = Pessoa("Maria", 25, "Atriz")
+p2 = Pessoa ("João", 32, altura="1.80")
+p3 = Pessoa ("Felipe", 17, "Estudante", "1.85")
+
+p1.apresentar()
+p3.apresentar()
+
+p2.maioridade()
+p3.maioridade()
+
+
+#Definir um atributo para apenas um objeto
+
+p3.genero = "masculino"
+
+p1.imprimir()
+p2.imprimir()
+p3.imprimir()
