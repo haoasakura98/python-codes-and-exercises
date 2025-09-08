@@ -1,0 +1,23 @@
+nome = input("Qual o seu nome? ")
+programador = "Rafael"
+print(f"Olá, {nome}, seja bem vindo(a). Meu nome é {programador}")
+
+print(f"Você digitou um dado do tipo \n str? {nome.isalpha()} \n INT? {nome.isnumeric()}\n float? {nome.isdecimal()} \n")
+
+data = input("Por favor, insira sua data de nascimento dd/mm/aa ")
+dia, mes, ano = data.split("/")
+idade = 2025 - int(ano)
+
+print(f"Se voce nasceu em {data} isso significa que sua idade é {idade}")
+
+a = int(input("digite o primeiro numero "))
+b = int(input("digite o segunro numero "))
+
+resultado = a + b
+print(f"O resultado da soma é: {resultado}")
+
+
+print("O resultado é um número?", isinstance(resultado, int))
+print("O resultado é str?", isinstance(resultado, str))
+print("O resultado é float?", isinstance(resultado, float))
+print("O resultado é booleano?", isinstance(resultado, bool))
