@@ -1,0 +1,88 @@
+import datetime
+import locale
+import pytz
+import tkinter as tk
+from tkinter import ttk
+
+# Configura a localidade para pt-br
+locale.setlocale(locale.LC_TIME, 'Portuguese_Brazil')
+
+class RelogioCalendario:
+    def __init__(self, root):
+        self.root = root
+        self.root.title("Relógio e Calendário")
+        self.root.geometry("400x300")
+        
+        # Label para exibir data e hora local
+        self.label_data_hora = ttk.Label(root, text="", font=("Arial", 12))
+        self.label_data_hora.pack(pady=10)
+        
+        # Label para exibir horários de outros fusos
+        self.label_fusos = ttk.Label(root, text="", font=("Arial", 10), justify="left")
+        self.label_fusos.pack(pady=10)
+        
+        # Label para o contador de dias até o aniversário
+        self.label_aniversario = ttk.Label(root, text="", font=("Arial", 10))
+        self.label_aniversario.pack(pady=10)
+        
+        # Botão para encerrar o programa
+        self.botao_encerrar = ttk.Button(root, text="Encerrar", command=self.encerrar)
+        self.botao_encerrar.pack(pady=20)
+        
+        # Inicia a atualização do relógio
+        self.atualizar()
+
+    def atualizar(self):
+        # Data e hora local
+        now = datetime.datetime.now()
+        horas = now.strftime("%H:%M:%S")
+        dia = now.strftime("%d de %B (%m) de %Y")
+        self.label_data_hora.config(text=f"Hoje é {dia} e agora são: {horas}")
+        
+        # Horários em outros fusos
+        tz_usa = pytz.timezone('America/New_York')
+        tz_jpn = pytz.timezone('Asia/Tokyo')
+        tz_chn = pytz.timezone('Asia/Shanghai')
+        tz_ger = pytz.timezone('Europe/Berlin')
+        
+        nowUSA = datetime.datetime.now(tz_usa)
+        nowJPN = datetime.datetime.now(tz_jpn)
+        nowCHN = datetime.datetime.now(tz_chn)
+        nowGER = datetime.datetime.now(tz_ger)
+        
+        horas_usa = nowUSA.strftime("%H:%M:%S")
+        horas_jpn = nowJPN.strftime("%H:%M:%S")
+        horas_chn = nowCHN.strftime("%H:%M:%S")
+        horas_ger = nowGER.strftime("%H:%M:%S")
+        
+        fusos_texto = (f"Nos EUA: {horas_usa}\n"
+                       f"No Japão: {horas_jpn}\n"
+                       f"Na China: {horas_chn}\n"
+                       f"Na Alemanha: {horas_ger}")
+        self.label_fusos.config(text=fusos_texto)
+        
+        # Contador para o próximo aniversário
+        aniversario = datetime.date(1996, 3, 14)
+        hoje = datetime.date.today()
+        ano_atual = hoje.year
+        proximo_aniversario = datetime.date(ano_atual, aniversario.month, aniversario.day)
+        
+        if proximo_aniversario < hoje:
+            proximo_aniversario = datetime.date(ano_atual + 1, aniversario.month, aniversario.day)
+        
+        temporizador = (proximo_aniversario - hoje).days
+        self.label_aniversario.config(text=f"Faltam {temporizador} dias para o seu aniversário")
+        
+        # Agenda a próxima atualização em 1 segundo
+        self.root.after(1000, self.atualizar)
+    
+    def encerrar(self):
+        # Encerra o programa
+        self.root.quit()
+        self.root.destroy()
+
+# Inicia a aplicação
+if __name__ == "__main__":
+    root = tk.Tk()
+    app = RelogioCalendario(root)
+    root.mainloop()
