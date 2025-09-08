@@ -1,0 +1,39 @@
+# Jogo de plataforma onde o objetivo é chegar no final
+# "_" = chão (pode andar)
+# "x" = buraco (precisa pular)
+# "coin" = moeda (item a ser coletado)
+# "final" = objetivo final
+
+caminho = ["_", "_", "x", "_", "coin", "_", "x", "_", "x", "coin", "x", "_", "_", "_", "x", "_", "final"]
+
+print("🎮 Iniciando o jogo de plataforma!\n")
+
+p = 0
+
+while p < len(caminho):
+
+    p_atual = caminho[p]
+    p_futura = caminho[p + 1] if p + 1 < len(caminho) else None
+    
+    if (p_atual == "final"):
+        print(f"Parabens voce chegou no final!")
+        break
+    if (p_atual == "_") and (p_futura != "x") and (p_futura != "coin"):
+        print(f"Andando para o proximo bloco.")
+        p = p + 1
+    elif (p_atual == "_") and (p_futura == "x"):
+        print(f"Pula o buraco da posicao {p + 1}")
+        p = p + 2
+    elif (p_atual == "_") and (p_futura == "coin"):
+        print(f"Andou para o proximo bloco e achou uma moeda na posição {p + 1}")
+        p = p + 1
+    elif (p_atual == "coin") and (p_futura == "_"):
+        print(f"Pegando uma moeda e seguindo em frente")
+        p = p + 1
+    elif (p_atual == "coin") and (p_futura =="x"):
+        print(f"Pegando uma moeda e pulando a posição {p + 1}")
+        p = p + 2
+    else:
+        print(f"???")
+        break
+
