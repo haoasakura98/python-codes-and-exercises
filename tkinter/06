@@ -1,0 +1,37 @@
+import tkinter
+
+#Criar no TKINTER uma janela com entrada para registrar tarefa 
+#Cada tarefa registrada deve possuir um quadrado que quando clicado alterna entre marcado ou não marcado para simbolizar a tarefa feita
+
+root = tkinter.Tk()
+root.title("To do List!")
+root.geometry("300x300")
+
+label_todolist = tkinter.Label(root, text="tarefas à fazer:")
+label_todolist.pack()
+
+entrada = tkinter.Entry(root)
+entrada.pack()
+
+frame_tarefas = tkinter.Frame(root)
+frame_tarefas.pack(pady=10)
+
+
+
+def criar_task():
+    tarefa = entrada.get()
+    if tarefa.strip():
+        var = tkinter.BooleanVar()
+        check = tkinter.Checkbutton(frame_tarefas, text=tarefa, variable=var)
+        check.pack(anchor="w")
+        entrada.delete(0, tkinter.END)
+
+
+creating = tkinter.Button(root, text="criar tarefa", command=criar_task)
+creating.pack()
+
+quit = tkinter.Button(root, text="Fechar Diário", command=root.destroy)
+quit.pack(padx=50, pady=50)
+
+
+root.mainloop()
