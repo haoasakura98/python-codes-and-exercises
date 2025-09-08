@@ -1,0 +1,86 @@
+#Faça um programa que guarde nome e peso de varias pessoas e as guarde em uma lista. no final mostre
+#quantas pessoas foram cadastradas. A pessoa mais pesada. A pessoa mais leve. Uma lista ranqueando as pessoas pelo peso.
+
+dados = list()
+formulario = list()
+
+while True:
+    vontade = str(input("Deseja cadastrar uma pessoa? Y/N\n")).upper()
+
+    if vontade != "Y":
+        break
+
+    formulario.append(str(input("Digite um nome\n")))
+    formulario.append(int(input("Digite o peso da pessoa\n")))
+    dados.append(formulario[:])
+    formulario.clear()
+    
+opcao = input(str("Digite o que deseja saber:\n 1. Quantidade de pessoas cadastradas 2. Pessoa mais Pesada\n 3. Pessoa mais leve 4. Ranking 5. Ultimos dados incluidos"))
+ranking = sorted(dados, key=lambda x: x[1], reverse=True)
+ultimo = len(dados)
+
+
+if opcao == "1":
+    print(f"O total de pessoas cadastradas é {len(dados)}")
+
+if opcao == "2":
+    print(f"A pessoa mais pesada é {ranking[0][0]} pesando {ranking[0][1]}")
+
+
+if opcao == "3":
+    print(f"A pessoa mais leve é {ranking[-1][0]} pesando {ranking[-1][1]}")
+
+if opcao == "4":
+    print(f"Aqui está o ranking {ranking}")
+
+if opcao == "5":
+    print(f"Os ultimos dados incluidos foram {dados[ultimo - 1]}")
+    
+
+
+
+
+    
+
+
+##########################################################################################################################################################################################################################################################
+
+#Crie um programa que crie uma matriz 3x3 e preencha com valores lidos pelo teclado. No final imprima a matriz com a formatação correta
+#no final mostre a soma de todos os valores pares da matriz. A soma dos valores de uma determinada coluna. o maior valor da  linha determinada
+
+matriz = []
+valores = []
+
+
+for m in range(3):
+    for e in range(3):
+        valores.append(int(input("Digite um valor")))
+    matriz.append(valores[:])
+    valores.clear()
+
+for c in matriz:
+    for linha in c:
+        print(f"[ {linha} ]", end="")
+    print()
+
+soma = 0
+for linha in matriz:
+    soma = soma + linha[1]
+print(f"A soma da coluna 2 é: {soma}")
+
+maior_valor = max(matriz[2])
+print(f"O maior valor da linha 3 é {maior_valor}")
+
+for c in matriz:
+    for linha in c:
+        if linha % 2 == 0:
+            print("f{linha}")
+
+
+
+
+
+###########################################################################################################################################################################################################
+#crie um programa que leia o nome e duas notas de varios alunos e guarde tudo em uma lista composta. no final, mostre um boletim contendo a media de cada um
+#permita que o usuario possa mostrar as notas individualmente de cada aluno
+#Nota 1= A1 Nota 2 = A2
