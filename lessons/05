@@ -1,0 +1,58 @@
+from datetime import datetime
+
+
+class conta_bancaria:
+    def __init__ (self, titular, saldo, extrato=None):
+        self.titular = titular
+        self.__saldo = saldo
+        self.extrato = extrato if extrato is not None else [] 
+    
+    def sacar(self):
+        saque = int(input("Digite o valor que deseja sacar"))
+        if 0 < saque <= self.__saldo:
+            self.__saldo -= saque
+            print(f"Saque de {saque} realizado com sucesso. Seu saldo atual é {self.__saldo}")
+            self.extrato.append({
+                "tipo":"saque", 
+                "valor":-saque, 
+                "data": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                })
+        else:
+            print(f"Saldo insuficiente")
+
+    def depositar(self):
+        deposito = int(input("Digite o valor do deposito"))
+        if deposito > 0:
+            self.__saldo += deposito
+            print(f"Deposito de {deposito} realizado com sucesso. O saldo mudou para {self.__saldo}")
+            self.extrato.append({
+                "tipo":"deposito",
+                "valor":+deposito,
+                "data": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            })
+
+    def get_saldo(self):
+        return self.__saldo
+    
+    def set_saldo(self, valor):
+        if valor >= 0:
+            self.__saldo = valor
+        else:
+            print(f"Saldo não pode ser negativo!")
+
+    def historico(self):
+        for i in self.extrato:
+            print(f"{i['tipo']}, realizado em {i['data']} : {i['valor']}")
+
+class Cliente:
+    def __init__(self, id, score, credito):
+        self.id = id
+        self.score = score
+        self.credito = credito
+        self.contas = []
+
+    def abrir_conta(self):
+        cliente_conta = conta_bancaria(self.id, saldo=0)
+        self.contas.append(cliente_conta)
+        print(f"Conta criada para {self.id} com saldo inicial de R${saldo_inicial}")
+        return nova_conta
