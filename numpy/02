@@ -1,0 +1,20 @@
+import numpy
+import random
+
+
+alunos = ["Rafael", "Thiago", "Matheus", "Gabriel", "Paulo", "Julio", "Fernando", "Rodrigo", "Joao", "Eduardo", "Ana", "Maria", "Eduarda", "Isabela", "Natália", "Fernanda", "Jessica", "Marcela", "Isis", "Eva"]
+boletim = {aluno: random.randint(0, 10) for aluno in alunos}
+
+for aluno, nota in sorted(boletim.items(), key=lambda x: x[1], reverse=True):
+    print(f"{aluno}: {nota}")
+
+dados = numpy.array(list(boletim.values()))
+
+media_turma = numpy.mean(dados)
+mediana_turma = numpy.median(dados)
+desvio_turma = numpy.std(dados)
+maior_turma = numpy.max(dados)
+menor_turma = numpy.min(dados)
+aluno_maior = [aluno for aluno, nota in boletim.items() if nota == maior_turma]
+
+print(f"A media da turma foi {media_turma}\n A mediana da turma foi {mediana_turma}\n O desvio padrão da turma foi {desvio_turma}\n A maior nota foi {maior_turma} obtida por e a menor foi {menor_turma}")
