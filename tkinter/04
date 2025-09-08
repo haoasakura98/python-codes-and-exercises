@@ -1,0 +1,114 @@
+import tkinter
+from tkinter import messagebox
+
+# Lista para armazenar os pedidos
+pedidos = []
+
+# Dicionário com os preços
+precos = {
+    "Espetinho": 10,
+    "Macarrão": 20,
+    "Hamburguer": 15,
+    "Pamonha": 8,
+    "Coca-Cola": 6,
+    "Suco de Laranja": 7,
+    "Agua": 3
+}
+
+def mostrar_frame(frame):
+    frame.tkraise()
+
+def adicionar_item(item):
+    pedidos.append(item)
+    print(f"{item} foi adicionado à conta (R$ {precos[item]})")
+
+def mostrar_conta():
+    if pedidos:
+        total = sum(precos[item] for item in pedidos)
+        itens = "\n".join([f"- {item} (R$ {precos[item]})" for item in pedidos])
+        label_conta_valor.config(text=f"Itens consumidos:\n{itens}\n\nTotal: R$ {total}")
+    else:
+        label_conta_valor.config(text="Nenhum item foi pedido ainda.")
+
+janela = tkinter.Tk()
+janela.title("Restaurante do Judeu")
+janela.geometry("500x500")
+
+container = tkinter.Frame(janela)
+container.pack(fill="both", expand=True)
+
+menu_principal = tkinter.Frame(container)
+menu_pratos = tkinter.Frame(container)
+menu_bebidas = tkinter.Frame(container)
+menu_conta = tkinter.Frame(container)
+
+for frame in (menu_principal, menu_pratos, menu_bebidas, menu_conta):
+    frame.grid(row=0, column=0, sticky="nsew")
+
+
+### MENU PRINCIPAL ###
+label = tkinter.Label(menu_principal, text="Bem-vindo ao restaurante do Judeu. Selecione um prato")
+label.pack(pady=20)
+
+botao_pratos = tkinter.Button(menu_principal, text="1. Pratos", command=lambda: mostrar_frame(menu_pratos))
+botao_pratos.pack(side=tkinter.LEFT, padx=20, pady=80)
+
+botao_bebidas = tkinter.Button(menu_principal, text="2. Bebidas", command=lambda: mostrar_frame(menu_bebidas))
+botao_bebidas.pack(side=tkinter.LEFT, padx=20, pady=80)
+
+botao_conta = tkinter.Button(menu_principal, text="Pedir conta", command=lambda: [mostrar_frame(menu_conta), mostrar_conta()])
+botao_conta.pack(side=tkinter.LEFT, padx=20, pady=80)
+
+
+### MENU DE PRATOS ###
+label_pratos = tkinter.Label(menu_pratos, text="Faça seu pedido")
+label_pratos.pack(pady=20)
+
+prato1 = tkinter.Button(menu_pratos, text="Espetinho", command=lambda: adicionar_item("Espetinho"))
+prato1.pack(padx=10)
+prato2 = tkinter.Button(menu_pratos, text="Macarrão", command=lambda: adicionar_item("Macarrão"))
+prato2.pack(padx=10)
+prato3 = tkinter.Button(menu_pratos, text="Hamburguer", command=lambda: adicionar_item("Hamburguer"))
+prato3.pack(padx=10)
+prato4 = tkinter.Button(menu_pratos, text="Pamonha", command=lambda: adicionar_item("Pamonha"))
+prato4.pack(padx=10)
+
+voltar1 = tkinter.Button(menu_pratos, text="Voltar ao menu principal", command=lambda: mostrar_frame(menu_principal))
+voltar1.pack(padx=10)
+
+
+### MENU DE BEBIDAS ###
+label_bebidas = tkinter.Label(menu_bebidas, text="Faça seu pedido")
+label_bebidas.pack(pady=20)
+
+bebida1 = tkinter.Button(menu_bebidas, text="Coca-Cola", command=lambda: adicionar_item("Coca-Cola"))
+bebida1.pack(padx=10)
+bebida2 = tkinter.Button(menu_bebidas, text="Suco de Laranja", command=lambda: adicionar_item("Suco de Laranja"))
+bebida2.pack(padx=10)
+bebida3 = tkinter.Button(menu_bebidas, text="Água", command=lambda: adicionar_item("Agua"))
+bebida3.pack(padx=10)
+
+voltar2 = tkinter.Button(menu_bebidas, text="Voltar ao menu principal", command=lambda: mostrar_frame(menu_principal))
+voltar2.pack(padx=10)
+
+
+### MENU DA CONTA ###
+label_conta = tkinter.Label(menu_conta, text="Conta do cliente")
+label_conta.pack(pady=20)
+
+label_conta_valor = tkinter.Label(menu_conta, text="")
+label_conta_valor.pack(pady=20)
+
+voltar3 = tkinter.Button(menu_conta, text="Voltar ao menu principal", command=lambda: mostrar_frame(menu_principal))
+voltar3.pack(padx=10)
+
+
+### RODAPÉ ###
+rodape = tkinter.Frame(janela)
+rodape.pack(side=tkinter.BOTTOM, pady=20, fill="x")
+
+sair = tkinter.Button(rodape, text="Sair", command=janela.destroy)
+sair.pack(pady=5)
+
+mostrar_frame(menu_principal)
+janela.mainloop()
