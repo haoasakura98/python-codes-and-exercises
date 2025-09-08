@@ -1,0 +1,42 @@
+import os
+import shutil
+
+#C:\Users\rafae\Downloads
+#Objetivo é separar os arquivos por tipo dentro das pastas
+
+pasta_alvo = input()
+
+#Cria as pastas para organização
+os.makedirs(os.path.join(pasta_alvo, "Documentos"), exist_ok=True)
+os.makedirs(os.path.join(pasta_alvo, "Programas"), exist_ok=True)
+os.makedirs(os.path.join(pasta_alvo, "Midia"), exist_ok=True)
+
+#Pega o caminho da pasta, cria variavel com os arquivos da pasta e caso não sejam pasta, os move para a pasta destinatário
+arquivos = os.listdir(pasta_alvo)
+for item in arquivos:
+    caminho_item = os.path.join(pasta_alvo, item)
+    if os.path.isfile(caminho_item):
+        extensao = os.path.splitext(item)[1].lower()
+        if extensao in [".pdf", ".docx", ".txt", ".xlsx"]:
+            destino = os.path.join(pasta_alvo, "Documentos", item)
+            shutil.move(caminho_item, destino)
+            print(f"Movido: {item} → {destino}")
+        elif extensao in [".exe"]:
+            destino = os.path.join(pasta_alvo, "Programas", item)
+            shutil.move(caminho_item, destino)
+            print(f"Movido: {item} → {destino}")
+        elif extensao in [".mp3", ".mp4"]:
+            destino = os.path.join(pasta_alvo, "Midia", item)
+            shutil.move(caminho_item, destino)
+            print(f"Movido: {item} → {destino}")
+        else:
+            continue
+
+        
+
+
+
+
+
+
+ 
